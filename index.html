@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"/>
+
+      
+<title>Mapping the Blue Ridge Parkway</title>
+
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/css/main.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet"> 
+          
+  </head>
+
+  <body>
+      
+    <div id="viewDiv"></div>  
+      
+    <!--<script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://js.arcgis.com/4.17/"></script>
+    <script src="js/renderers.js"></script>
+    <script type="text/plain" id="label">
+        var NAME = $feature.Name;
+        var ELEV = $feature.Elev;    
+        var ELEVCONCAT = ' (' + ELEV + ' ft)';
+        
+        var ELEVTEXT = When( ELEV == 0, '',
+            ELEV != 0, ELEVCONCAT, null );
+            
+        var labels = [ NAME, ELEVTEXT ];
+        return Concatenate(labels);  
+    </script>  
+    <script src="js/script.js"></script>
+      
+      
+  </body>
+</html>
