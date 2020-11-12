@@ -1,5 +1,97 @@
 /////////////////////Milepost Renderer////////////////
 
+    const bridgeRenderer = {
+            type: "unique-value",
+            field: "TYPE_",
+            visualVariables: [
+                {
+                    type: "size",
+                    field: "SIZE_",
+                    axis: "height",
+                    valueUnit: "meters"
+                },
+                {
+                    type: "rotation",
+                    field: "ROTATION",
+                }
+            ],
+            uniqueValueInfos: [
+                {
+                    value: "1",
+                    symbol: {
+                    type: "point-3d",
+                    symbolLayers: [
+                        {
+                            type: "object",
+                            resource: {
+                                href: "./3d/Bridge_1.glb"
+                                }
+                            }
+                        ]   
+                    }
+                },
+                {
+                    value: "2",
+                    symbol: {
+                    type: "point-3d",
+                    symbolLayers: [
+                        {
+                            type: "object",
+                            resource: {
+                                href: "./3d/Bridge_2.glb"
+                                }
+                            }
+                        ]   
+                    }
+                },
+                {
+                    value: "3",
+                    symbol: {
+                    type: "point-3d",
+                    symbolLayers: [
+                        {
+                            type: "object",
+                            resource: {
+                                href: "./3d/Bridge_3.glb"
+                                }
+                            }
+                        ]   
+                    }
+                },
+                {
+                    value: "4",
+                    symbol: {
+                    type: "point-3d",
+                    symbolLayers: [
+                        {
+                            type: "object",
+                            resource: {
+                                href: "./3d/Bridge_4.glb"
+                                }
+                            }
+                        ]   
+                    }
+                },
+                {
+                    value: "5",
+                    symbol: {
+                    type: "point-3d",
+                    symbolLayers: [
+                        {
+                            type: "object",
+                            resource: {
+                                href: "./3d/FireTower.glb"
+                                }
+                            }
+                        ]   
+                    }
+                }
+            ]
+        };  
+
+
+/////////////////////Milepost Renderer////////////////
+
 var mpVerticalOffset = {
     screenLength: 5,
     maxWorldLength: 100,
@@ -341,6 +433,8 @@ var overlookRendererTwo = {
     ]
 };
 
+///Start overlook Render Three
+
 var verticalOffsetThree = {
     screenLength: 7,
     maxWorldLength: 250,
@@ -356,9 +450,6 @@ function getIconThree(icon) {
         resource: {
             href: icon
         },
-        /*material: {
-          color: color
-        },*/
         size: 27,
         outline: {
           color: "black",
@@ -441,6 +532,7 @@ var overlookRendererThree = {
     ]
 };
 
+
 /////////////////////End Overlook Renderer////////////////
 
 /*function getTreeType(treeModel) {
@@ -511,8 +603,8 @@ var treeRenderer = {
               /*material: { 
                   color: "rgb(22, 133, 8)" 
               },*/
-              depth: 10,
-              width: 5
+              depth: 7,
+              width: 4
             }
           ]
         },
@@ -850,4 +942,5 @@ var rendTunnLarge = {
         }
     ]
 };
+
 

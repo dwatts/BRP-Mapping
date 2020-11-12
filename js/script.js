@@ -10,7 +10,7 @@
         "esri/widgets/Home",
         "esri/widgets/Zoom",
         "esri/widgets/Expand",  
-        "esri/widgets/NavigationToggle/NavigationToggleViewModel",  
+        "esri/widgets/NavigationToggle/NavigationToggleViewModel", 
         "esri/layers/SceneLayer",
         "esri/layers/WebTileLayer",
         "esri/widgets/Search",
@@ -18,10 +18,9 @@
         "esri/geometry/Polygon",
         "esri/layers/TileLayer",
         "esri/layers/VectorTileLayer",
-        /*"esri/layers/GraphicsLayer",
-        "esri/geometry/Point",*/ 
-          
-      ], function(WebScene, SceneView, Basemap, FeatureLayer, SimpleRenderer, Graphic, ElevationLayer, BaseElevationLayer, Home, Zoom, Expand, NavigationToggleVM, SceneLayer, WebTileLayer, Search, Locator, Polygon, TileLayer, VectorTileLayer/*, GraphicsLayer, Point*/) {
+        "esri/widgets/Editor"
+
+      ], function(WebScene, SceneView, Basemap, FeatureLayer, SimpleRenderer, Graphic, ElevationLayer, BaseElevationLayer, Home, Zoom, Expand, NavigationToggleVM, SceneLayer, WebTileLayer, Search, Locator, Polygon, TileLayer, VectorTileLayer, Editor) {
         
           
         var ExaggeratedElevationLayer = BaseElevationLayer.createSubclass({
@@ -47,28 +46,7 @@
             );
           }
         });
-          
-          
-/*        const centerlineRenderSmall = {
-            type: "simple",
-            symbol: {
-              color: "#fff",
-              type: "simple-line",
-              style: "solid",
-              width: 1.5  
-            }
-        };
-
-        const centerlineRenderMedium = {
-            type: "simple",
-            symbol: {
-              color: "#e0e0e0",
-              type: "simple-line",
-              style: "solid",
-              width: 2.5 
-            }
-        };*/   
-          
+                    
         const brpTrails = new FeatureLayer({
           url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Trails_Simplified/FeatureServer",
           opacity: 0.4,
@@ -148,7 +126,7 @@
                   },
                   font: {
                     weight: "normal",
-                    family: "Roboto Condensed"
+                    family: "Roboto Mono"
                   },
                   size: 7,   
                 }],
@@ -228,7 +206,7 @@
                   },
                   font: {
                     weight: "normal",
-                    family: "Roboto Condensed"
+                    family: "Roboto Mono"
                   },
                   size: 9,   
                 }],
@@ -288,14 +266,14 @@
                   },
                   font: {
                     weight: "normal",
-                    family: "Roboto Condensed"
+                    family: "Roboto Mono"
                   },
-                  size: 9,   
+                  size: 7,   
                 }],
-                verticalOffset: {
-                  screenLength: 60,
-                  maxWorldLength: 1000,
-                  minWorldLength: 20
+                VerticalOffset: {
+                  screenLength: 7,
+                  maxWorldLength: 250,
+                  minWorldLength: 50
                 },
                 callout: {
                   type: "line", // autocasts as new LineCallout3D()
@@ -308,6 +286,13 @@
               }
             };
 
+        var overlookTemplate = {
+            outFields: ["*"],
+              //title: "{name_e}",
+              content: function (feature) {
+                return setContentInfo(feature.graphic.attributes);
+              },    
+        };
           
         const brpOverlooks = new FeatureLayer({
             url:"https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Overlooks/FeatureServer",
@@ -317,14 +302,10 @@
             screenSizePerspectiveEnabled: true,
             labelingInfo: [],
             popupEnabled: true,
-            popupTemplate: {
-            outFields: ["*"],
-              //title: "{name_e}",
-              content: function (feature) {
-                return setContentInfo(feature.graphic.attributes);
-              },    
-          },        
+            popupTemplate: overlookTemplate       
         });
+          
+
           
         function setContentInfo(results) {
             //var Admin = "<img class='icon' alt='' src='img/RangerStation_Black.png'/>";
@@ -347,11 +328,21 @@
             var RestRoom = "<img class='icon' alt='' src='img/Restroom_Black.png'/>"; 
             var Scenic = "<img class='icon' alt='' src='img/ScenicView_Black.png'/>";
 
+            var elevFormat = results.Elev.toLocaleString("en", {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,                
+            });
+            
             var elevation = (
-                results.Elev === 0 ? "N/A" :
-                results.Elev
+                elevFormat === 0 ? "N/A" :
+                elevFormat
             );
             
+            /*var elevation = (
+                results.Elev === 0 ? "N/A" :
+                results.Elev
+            );*/
+                        
             var details = (
                 results.Details === '' ? "" :
                 'Details: '
@@ -360,6 +351,11 @@
             var notes = (
                 results.Notes1 === ' ' ? "" :
                 'Notes: '
+            );
+            
+            var state = (
+                results.State === 'VA' ? "Virginia" :
+                'North Carolina'
             );
             
             var useOne = (
@@ -490,7 +486,7 @@
             
             var popupElement = document.createElement("div");
             
-            popupElement.innerHTML = "<table><tbody><tr><td><h1>" + results.Name + "</h1></td></tr></tbody></table><h3><b>Type:</b> " + results.Type + "</h3><h3><b>Milepost:</b> " + results.MilePost + "</h3><h3><b>Elevation:</b> " + elevation + " ft" + "</h3><h3><b>Activities & Amenities:</b></h3><table class='iconTable'><tbody><tr><td>" + useOne + "</td><td>" + useTwo + "</td><td>" + useThree + "</td><td>" + useFour + "</td><td>" + useFive + "</td></tr><tr><td class='iconText'>" + useOneText + "</td><td class='iconText'>" + useTwoText + "</td><td class='iconText'>" + useThreeText + "</td><td class='iconText'>" + useFourText + "</td><td class='iconText'>" + useFiveText + "</td></tr></tbody></table><h3><b>" + details + "</b> " + results.Details + "</h3><h3><b>" + notes + "</b> " + results.Notes1 + " "+ results.Notes2+ " " + results.Notes3+ " " + results.Notes4 + " " + results.Notes5 + "</h3>";
+            popupElement.innerHTML = "<table><tbody><tr><td><h1>" + results.Name + "</h1></td></tr></tbody></table><h3><b>Type:</b> " + results.Type + "</h3><h3><b>Milepost:</b> " + results.MilePost + "</h3><h3><b>State:</b> " + state + "</h3><h3><b>Elevation:</b> " + elevation + " ft" + "</h3><h3><b>Activities & Amenities:</b></h3><table class='iconTable'><tbody><tr><td>" + useOne + "</td><td>" + useTwo + "</td><td>" + useThree + "</td><td>" + useFour + "</td><td>" + useFive + "</td></tr><tr><td class='iconText'>" + useOneText + "</td><td class='iconText'>" + useTwoText + "</td><td class='iconText'>" + useThreeText + "</td><td class='iconText'>" + useFourText + "</td><td class='iconText'>" + useFiveText + "</td></tr></tbody></table><h3><b>" + details + "</b> " + results.Details + "</h3><h3><b>" + notes + "</b> " + results.Notes1 + " "+ results.Notes2+ " " + results.Notes3+ " " + results.Notes4 + " " + results.Notes5 + "</h3>";
             
             return popupElement;
             
@@ -524,10 +520,10 @@
                   },
                   font: {
                     weight: "normal",
-                    family: "Roboto Condensed"
+                    family: "Roboto Mono"
                   },
                       
-                  size: 7,   
+                  size: 6,   
                 }],
               } 
             }]
@@ -600,10 +596,10 @@
                   },
                   font: {
                     weight: "normal",
-                    family: "Roboto Condensed"
+                    family: "Roboto Mono"
                   },
                       
-                  size: 5,   
+                  size: 7,   
                 }],
               } 
             }]
@@ -644,7 +640,18 @@
           
           
         ////////////3d Buildings and Trees//////////////
-                          
+          
+          
+        const brpBridges = new FeatureLayer ({
+           url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Bridges_Points/FeatureServer/0",
+           elevationInfo: {
+               mode: "absolute-height"
+           },    
+           renderer: bridgeRenderer,    
+           opacity: 1,
+        });
+          
+          
         const tunnelRenderer = {
             type: "simple",
             symbol: {
@@ -680,9 +687,9 @@
         const brpBuildings3d = new FeatureLayer ({
            url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Buildings_Points/FeatureServer",
            renderer: buildingRenderer,
-           /*elevationInfo: {
+           elevationInfo: {
                 mode: "on-the-ground",
-           },*/ 
+           }, 
            opacity: 1,
         });  
           
@@ -700,7 +707,7 @@
         ////////////Tile Layers: Non-BRP Roads & Waterways//////////////  
            
         const tileBaseMap = new VectorTileLayer({
-            url:"https://tiles.arcgis.com/tiles/uX5kr9HIx4qXytm9/arcgis/rest/services/BRP_Base_Map_Mask_Border/VectorTileServer",
+            url:"https://tiles.arcgis.com/tiles/uX5kr9HIx4qXytm9/arcgis/rest/services/BRP_Base_Map_Mask_Border_V2/VectorTileServer",
         });  
         
         const baseMap = new TileLayer({
@@ -708,9 +715,9 @@
         })
             
         // Set Scene View
-          
+
        var webscene = new WebScene({
-            layers: [baseMap, tileBaseMap, natForests, othNatParks, vancPlaces, brpTrailsBack, brpTrails, tunnels, brpPeaks, brpOverlooks, brpTunnels, intersections, milePosts, brpBuildings3d, trees /*blimpGraphicsLayer*/],
+            layers: [baseMap, tileBaseMap, natForests, othNatParks, vancPlaces, brpTrailsBack, brpTrails, tunnels, brpPeaks, brpOverlooks, brpTunnels, intersections, milePosts, brpBridges, brpBuildings3d, trees /*blimpGraphicsLayer*/],
             ground: {
                 layers: [new ExaggeratedElevationLayer()]
             }
@@ -720,6 +727,10 @@
 
         var view = new SceneView({
           container: "viewDiv",
+          highlightOptions: {
+            color: [229, 88, 37],
+            fillOpacity: 0.4
+          },    
           map: webscene,
           //viewingMode: "global",
           //qualityProfile: "high",
@@ -734,6 +745,9 @@
                       width: 600
                   }
               } 
+          },    
+          ui: {
+              components: ["zoom"]
           },    
           environment: {
             background:{
@@ -757,7 +771,7 @@
           },
           constraints: {
               altitude: {
-                min: 2000,
+                min: 1200,
                 max: 900000,
               },
               tilt: {
@@ -766,8 +780,15 @@
             }
         });
         
+        view.ui.move( "zoom", "bottom-left"); 
+          
         view.popup.viewModel.actions = false;  
           
+         /*         var editor = new Editor({
+            view: view
+          });
+          // Add widget to top-right of the view
+          view.ui.add(editor, "top-right");  */
         
         ////////////Add Scale-Based Renderers///////////////  
           
@@ -904,15 +925,372 @@
           planeGraphic.symbol.symbolLayers = [planeSymbolLayer];
         }
       });*/
-          
-          
-          
-    /////////////////////End Plane Test//////////////////   
 
+   
+//////Start Radio Test/////
+       
+      $(document).ready(function() {
+            $('input:radio[name=type]').change(function() {
+                if (this.value == 'overlook') {
+                    filtFunctionOne(this);
+                }
+                else if (this.value == 'visitor') {
+                    filtFunctionTwo(this);
+                }
+                else if (this.value == 'point') {
+                    filtFunctionThree(this);
+                }
+            });
+        });      
+          
+       function filtFunctionOne() {
+                  view.when(function() {
+                    return brpOverlooks.when(function() {
+                      var query = brpOverlooks.createQuery();
+                      return brpOverlooks.queryFeatures(query);
+                    });
+                  })
+                  .then(getValuesOne)
+                  .then(getUniqueValuesOne)
+                  .then(addToSelectOne);
+
+                function getValuesOne(response) {    
+
+                  var features = response.features;  
+                  var values = features.map(function(feature) {
+                    if (feature.attributes.Type == 'Overlook' || feature.attributes.Type == 'Parking Area') {
+                        return feature.attributes.Name;
+                    } else {
+                        return '';
+                    }
+                  });
+                  return values;
+                }
+
+                function getUniqueValuesOne(values) {
+                  var uniqueValues = [];
+
+                  values.forEach(function(item, i) {
+                    if (
+                      (uniqueValues.length < 1 || uniqueValues.indexOf(item) === -1) &&
+                      item !== ""
+                    ) {
+                      uniqueValues.push(item);
+                    }
+                  });
+                  return uniqueValues;
+                }
+
+                function addToSelectOne(values) {
+                  $('#stateFilter').empty().append('<option value="">(Select an Overlook)</option>');    
+                  values.sort();
+                  values.forEach(function(value) {
+                    var option = document.createElement("option");
+                    option.text = value;
+                    stateFilter.add(option);
+                  });
+            }
+        }
+          
+        function filtFunctionTwo() {
+                  view.when(function() {
+                    return brpOverlooks.when(function() {
+                      var query = brpOverlooks.createQuery();
+                      return brpOverlooks.queryFeatures(query);
+                    });
+                  })
+                  .then(getValuesTwo)
+                  .then(getUniqueValuesTwo)
+                  .then(addToSelectTwo);
+
+                function getValuesTwo(response) {    
+
+                  var features = response.features;  
+                  var values = features.map(function(feature) {
+                    if (feature.attributes.Type == 'Visitor Center') {
+                        return feature.attributes.Name;
+                    } else {
+                        return '';
+                    }
+                  });
+                  return values;
+                }
+
+                function getUniqueValuesTwo(values) {
+                  var uniqueValues = [];
+
+                  values.forEach(function(item, i) {
+                    if (
+                      (uniqueValues.length < 1 || uniqueValues.indexOf(item) === -1) &&
+                      item !== ""
+                    ) {
+                      uniqueValues.push(item);
+                    }
+                  });
+                  return uniqueValues;
+                }
+
+                function addToSelectTwo(values) {
+                  $('#stateFilter').empty().append('<option value="">(Select a Visitor Center)</option>');    
+                  values.sort();
+                  values.forEach(function(value) {
+                    var option = document.createElement("option");
+                    option.text = value;
+                    stateFilter.add(option);
+                  });
+            }
+            
+        }
+            
+        function filtFunctionThree() {
+                  view.when(function() {
+                    return brpOverlooks.when(function() {
+                      var query = brpOverlooks.createQuery();
+                      return brpOverlooks.queryFeatures(query);
+                    });
+                  })
+                  .then(getValuesThree)
+                  .then(getUniqueValuesThree)
+                  .then(addToSelectThree);
+
+                function getValuesThree(response) {    
+
+                  var features = response.features;  
+                  var values = features.map(function(feature) {
+                    if (feature.attributes.Type == 'Picnic Area' || feature.attributes.Type == 'Point of Interest' || feature.attributes.Type == 'Campground' || feature.attributes.Type == 'Lodging') {
+                        return feature.attributes.Name;
+                    } else {
+                        return '';
+                    }
+                  });
+                  return values;
+                }
+
+                function getUniqueValuesThree(values) {
+                  var uniqueValues = [];
+
+                  values.forEach(function(item, i) {
+                    if (
+                      (uniqueValues.length < 1 || uniqueValues.indexOf(item) === -1) &&
+                      item !== ""
+                    ) {
+                      uniqueValues.push(item);
+                    }
+                  });
+                  return uniqueValues;
+                }
+
+                function addToSelectThree(values) {
+                  $('#stateFilter').empty().append('<option value="">(Select a Point of Interest)</option>');    
+                  values.sort();
+                  values.forEach(function(value) {
+                    var option = document.createElement("option");
+                    option.text = value;
+                    stateFilter.add(option);
+                  });
+            } 
+        }
+                    
+////////////End Radio Button Test///////////////////  
+                    
+          
+   view.when(function() {
+        return brpOverlooks.when(function() {
+          var query = brpOverlooks.createQuery();
+          return brpOverlooks.queryFeatures(query);
+        });
+      })
+      .then(getValues)
+      .then(getUniqueValues)
+      .then(addToSelect);
+          
+
+
+    function getValues(response) {    
+    
+      var features = response.features;  
+      var values = features.map(function(feature) {
+        if (feature.attributes.Type == 'Overlook' || feature.attributes.Type == 'Parking Area') {
+            return feature.attributes.Name;
+        } else {
+            return '';
+        }
+      });
+      return values;
+    }
+          
+    function getUniqueValues(values) {
+      var uniqueValues = [];
+
+      values.forEach(function(item, i) {
+        if (
+          (uniqueValues.length < 1 || uniqueValues.indexOf(item) === -1) &&
+          item !== ""
+        ) {
+          uniqueValues.push(item);
+        }
+      });
+      return uniqueValues;
+    }
+
+    function addToSelect(values) {
+      values.sort();
+      values.forEach(function(value) {
+        var option = document.createElement("option");
+        option.text = value;
+        stateFilter.add(option);
+      });
+    }
+                      
+    //Dropdown Menu Overlook Layer//
+          
+    var highlightSelect;
+            
+        webscene.when(function () {
+            
+          var overlookLayer = brpOverlooks;
+
+          view.whenLayerView(overlookLayer).then(function (layerView) {
+              
+            var queryOverlooks = overlookLayer.createQuery();
+              
+            var selectOne = document.getElementById("stateFilter");
+            
+            selectOne.addEventListener("change", onClick);
+              
+            function onClick(event) {
+              queryOverlooks.where = "Name='" + event.target.value + "'";
+              overlookLayer.queryFeatures(queryOverlooks).then(function (result) {
+                // if a feature is already highlighted, then remove the highlight
+                if (highlightSelect) {
+                  highlightSelect.remove();
+                }
+                // the feature to be highlighted
+                var feature = result.features[0];
+                //return feature;  
+                // use the objectID to highlight the feature
+                highlightSelect = layerView.highlight(
+                  feature.attributes["FID"]
+                );
+                // center the feature
+                view
+                  .goTo(
+                    {
+                      target: feature.geometry,
+                      tilt: 50,
+                      zoom: 15
+                    },
+                    {
+                      duration: 2000,
+                      easing: "linear"
+                    }
+                  )
+                  .then(function () {
+                    view.popup.open({
+                       features: [feature],
+                    });
+                })
+              });
+                      
+            }
+            
+          });
                           
-});
+        });
         
-         
+        $('#viewDiv').on('mouseup', function(){
+          highlightSelect.remove();
+        });  
+          
+
+////////////Zoom Stuff for Milemarkers///////////////////
+
+   view.when(function() {
+        return milePosts.when(function() {
+          var query = milePosts.createQuery();
+          return milePosts.queryFeatures(query);
+        });
+      })
+      .then(getValuesMP)
+      .then(getUniqueValuesMP)
+      .then(addToSelectMP);
+          
+
+
+    function getValuesMP(response) {    
+    
+      var features = response.features;  
+      var values = features.map(function(feature) {
+            return feature.attributes.MILEPOST;
+
+      });
+      return values;
+    }
+           
+    function getUniqueValuesMP(values) {
+      var uniqueValues = [];
+
+      values.forEach(function(item, i) {
+        if (
+          (uniqueValues.length < 1 || uniqueValues.indexOf(item) === -1) &&
+          item !== ""
+        ) {
+          uniqueValues.push(item);
+        }
+      });
+      return uniqueValues;
+    }
+
+    function addToSelectMP(values) {
+      values.sort(function(a, b){return a-b});
+      values.forEach(function(value) {
+        var option = document.createElement("option");
+        option.text = value;
+        mpFilter.add(option);
+      });
+    }
+                      
+    //Dropdown Menu Milemarkers//
+          
+            
+        webscene.when(function () {
+            
+          var mpLayer = milePosts;
+
+          view.whenLayerView(mpLayer).then(function (layerView) {
+              
+            var queryMileposts = mpLayer.createQuery();
+              
+            var selectOne = document.getElementById("mpFilter");
+            
+            selectOne.addEventListener("change", onClick);
+              
+            function onClick(event) {
+              queryMileposts.where = "MILEPOST='" + event.target.value + "'";
+              mpLayer.queryFeatures(queryMileposts).then(function (result) {
+
+                var feature = result.features[0];
+                
+                view
+                  .goTo(
+                    {
+                      target: feature.geometry,
+                      tilt: 30,
+                      zoom: 16
+                    },
+                    {
+                      duration: 2000,
+                      easing: "linear"
+                    }
+                  )
+              });
+            }
+
+          });
+        });
+                     
+    });
+
 
 
         

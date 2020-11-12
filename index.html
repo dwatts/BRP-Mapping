@@ -9,19 +9,40 @@
     <link rel="stylesheet" href="style.css"/>
     <link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/css/main.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
           
   </head>
 
   <body>
       
-    <div id="viewDiv"></div>  
+   <div id="titleDiv"><h1 class="titleText">Mapping the Blue Ridge Parkway</h1></div>
       
+   <div id="filterDiv">
+        <h3 class="menuText">Zoom to a Point of Interest</h3>
+        <p class="radio">
+          <input type="radio" id="overlook" name="type" value="overlook" checked><label for="overlook">Overlooks</label>
+          <br>
+          <input type="radio" id="visitor" name="type" value="visitor"><label for="visitor">Visitor Centers</label>
+          <br>
+          <input type="radio" id="point" name="type" value="point"><label for="point">Points of Interest</label>
+        </p>
+        <select id="stateFilter" class="dropdown">
+            <option value="">(Select an Overlook)</option>
+        </select>
+        <h3 class="menuText">Zoom to a Milemarker</h3>
+        <select id="mpFilter" class="dropdown">
+            <option value="">(Choose a Milemarker)</option>
+        </select>
+    </div> 
+    
+     
+      
+    <div id="viewDiv"></div>  
+    
     <!--<script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://js.arcgis.com/4.17/"></script>
-    <script src="js/renderers.js"></script>
+    <script src="js/renderers.js"></script> 
     <script type="text/plain" id="label">
         var NAME = $feature.Name;
         var ELEV = $feature.Elev;    
