@@ -3,6 +3,8 @@
         "esri/views/SceneView",
         "esri/Basemap",  
         "esri/layers/FeatureLayer",
+        "esri/symbols/PolygonSymbol3D",
+        "esri/symbols/ExtrudeSymbol3DLayer",  
         "esri/renderers/SimpleRenderer",  
         "esri/Graphic",
         "esri/layers/ElevationLayer",
@@ -20,7 +22,8 @@
         "esri/layers/VectorTileLayer",
         "esri/widgets/Editor"
 
-      ], function(WebScene, SceneView, Basemap, FeatureLayer, SimpleRenderer, Graphic, ElevationLayer, BaseElevationLayer, Home, Zoom, Expand, NavigationToggleVM, SceneLayer, WebTileLayer, Search, Locator, Polygon, TileLayer, VectorTileLayer, Editor) {
+      ], function(WebScene, SceneView, Basemap, FeatureLayer, PolygonSymbol3D,
+      ExtrudeSymbol3DLayer, SimpleRenderer, Graphic, ElevationLayer, BaseElevationLayer, Home, Zoom, Expand, NavigationToggleVM, SceneLayer, WebTileLayer, Search, Locator, Polygon, TileLayer, VectorTileLayer, Editor) {
         
           
         var ExaggeratedElevationLayer = BaseElevationLayer.createSubclass({
@@ -703,6 +706,46 @@
             minScale: 30000,
             renderer: treeRenderer,
         });  
+        ////////////State Labels//////////////
+          
+        var labelRenderer = new SimpleRenderer({
+            symbol: new PolygonSymbol3D({
+              symbolLayers: [
+                  {
+                    type: "extrude", 
+                    material: {
+                      color: [64, 64, 64, 1]
+                    },
+                    edges: {
+                      type: "solid",
+                      color: [0,0,0,0],
+                      size: 1
+                    }
+                  }
+                ]
+            }),
+            visualVariables: [{
+              type: "size",
+              field: "Hght",
+              valueUnit: "feet"
+            }]
+          });      
+          
+        const stateLabels = new FeatureLayer({
+            url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/State_Names_Roboto/FeatureServer",
+            maxScale: 0,
+            minScale: 600000,
+            opacity: 0.8,
+            visible: true,
+            renderer: labelRenderer,
+            elevationInfo: {
+                mode: "relative-to-ground",
+                offset: 200,
+                unit: "foot"
+                
+           }, 
+        });            
+          
           
         ////////////Tile Layers: Non-BRP Roads & Waterways//////////////  
            
@@ -717,7 +760,7 @@
         // Set Scene View
 
        var webscene = new WebScene({
-            layers: [baseMap, tileBaseMap, natForests, othNatParks, vancPlaces, brpTrailsBack, brpTrails, tunnels, brpPeaks, brpOverlooks, brpTunnels, intersections, milePosts, brpBridges, brpBuildings3d, trees /*blimpGraphicsLayer*/],
+            layers: [baseMap, tileBaseMap, natForests, othNatParks, vancPlaces, brpTrailsBack, brpTrails, tunnels, brpPeaks, brpOverlooks, brpTunnels, intersections, milePosts, brpBridges, brpBuildings3d, trees, stateLabels /*blimpGraphicsLayer*/],
             ground: {
                 layers: [new ExaggeratedElevationLayer()]
             }
