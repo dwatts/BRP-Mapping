@@ -183,7 +183,7 @@ a:hover {
 }
 
 .esri-zoom .esri-widget--button:last-child {
-  border-top: 3px solid #000000 !important;
+  border-top: 2px solid #000000 !important;
 }
 
 .esri-navigation-toggle:hover,
@@ -194,7 +194,7 @@ a:hover {
 .esri-zoom .esri-widget--button {
   color: #000 !important;
   background-color: #ffff !important;
-  border: 3px solid #000 !important;
+  border: 2px solid #000 !important;
   border-radius: 40% !important;
   margin-top: 3px !important;
 }
@@ -235,7 +235,7 @@ a:hover {
     font-weight: 400;
 }
 
-.esri-icon-description {
+.esri-icon-maps {
     position: absolute;
     bottom: 85px;
     left: 15px;
@@ -244,8 +244,7 @@ a:hover {
     z-index: 1001;
     color: #000 !important;
     background-color: #fff !important;
-
-    border: 3px solid #000 !important;
+    border: 2px solid #000 !important;
     border-radius: 40% !important;
     cursor: pointer
 }
