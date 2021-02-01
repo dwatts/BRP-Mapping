@@ -235,12 +235,13 @@ a:hover {
     font-weight: 400;
 }
 
-.esri-icon-maps {
+.esri-icon-documentation {
     position: absolute;
     bottom: 85px;
     left: 15px;
-    height: 32px;
-    width: 32px;
+    padding: 6px;
+    text-align: center;
+    text-decoration: none;
     z-index: 1001;
     color: #000 !important;
     background-color: #fff !important;
@@ -249,12 +250,12 @@ a:hover {
     cursor: pointer
 }
 
-.esri-icon-description:hover {
+.esri-icon-documentation:hover {
     background-color:  #4feb34 !important;
     color: #000 !important;
 }
 
-.esri-icon-description.click {
+.esri-icon-documentation.click {
     background-color:  #4feb34 !important;
 }
 

@@ -1337,7 +1337,7 @@
         $(document).ready(function(){
           $("#infoButton").click(function(){
             $("#legendBox").fadeToggle(100);
-            $(".esri-icon-description").toggleClass('click');
+            $(".esri-icon-documentation").toggleClass('click');
           });
         });  
 
