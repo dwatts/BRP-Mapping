@@ -176,6 +176,9 @@ a:hover {
 
 .esri-zoom  {
   background-color: transparent !important;
+  position: absolute;
+  bottom: 14px;
+  left: 15px;
 }
 
 .esri-ui-corner .esri-component {
