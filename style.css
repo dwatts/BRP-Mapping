@@ -179,6 +179,8 @@ a:hover {
   position: absolute;
   bottom: 14px;
   left: 15px;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
 }
 
 .esri-ui-corner .esri-component {
@@ -250,7 +252,8 @@ a:hover {
     background-color: #fff !important;
     border: 2px solid #000 !important;
     border-radius: 40% !important;
-    cursor: pointer
+    cursor: pointer;
+    margin-left: 0px !important;
 }
 
 .esri-icon-documentation:hover {
