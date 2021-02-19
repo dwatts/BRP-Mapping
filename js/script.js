@@ -835,7 +835,6 @@
         
         ////////////Add Scale-Based Renderers///////////////  
           
-          
         view.when().then(function() {     
             view.watch("scale", function(newValue) {
             if (newValue <= 7000) {
@@ -884,93 +883,9 @@
             }
           });
         });
-                  
-    /////////////////////Test Plane Addition////////////////// 
-          
-        /*var graphicsLayer = new GraphicsLayer({
-            elevationInfo: {
-                mode: "absolute-height"
-            }
-        });
-          
-        webscene.add(graphicsLayer);
-        
-        const radius = 3000;      
-        const duration = 20000;  
-
-        const point = {
-          type: "point",
-          x: -79.932157,
-          y: 37.250260,
-          z: 1000,
-        };
-
-        const markerSymbol = {
-          type: "point-3d",
-          symbolLayers: [
-            {
-              type: "object",
-              resource: { href: "./3d/model.gltf" },
-              height: 250,
-              heading: 90,
-              roll: 10,
-              tilt: 0
-            }
-          ]
-        };
-
-        const planeGraphic = new Graphic({
-          geometry: point,
-          symbol: markerSymbol
-        });
-          
-        graphicsLayer.add(planeGraphic);  
-            
-      const planeSymbolLayer = planeGraphic.symbol.symbolLayers.getItemAt(0);
-      const planeGeo = planeGraphic.geometry;       
-          
-      const positionAnimation = anime({
-            //targets: point,
-            x: {
-              value: "+=" + radius,
-              easing: function (el, i, total) {
-                return function (t) {
-                  return Math.sin(t * 2 * Math.PI);
-                }
-              }
-            },
-            y: {
-              value: "+=" + radius,
-              easing: function (el, i, total) {
-                return function (t) {
-                  return Math.cos(t * 2 * Math.PI);
-                }
-              }
-            },
-            duration,
-            autoplay: true,
-            loop: true,
-            update: function () {
-              planeGraphic.geometry = planeGeo.clone();
-            }
-      });
-             
-          
-      const headingAnimation = anime({
-        targets: planeSymbolLayer,
-        heading: "+=360",
-        duration,
-        easing: "linear",
-        autoplay: true,
-        loop: true,
-        update: function () {
-          planeGraphic.symbol = planeGraphic.symbol.clone();
-          planeGraphic.symbol.symbolLayers = [planeSymbolLayer];
-        }
-      });*/
 
    
-//////Start Radio Test/////
+//////Radio Buttons/////
        
       $(document).ready(function() {
             $('input:radio[name=type]').change(function() {
