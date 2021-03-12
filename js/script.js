@@ -49,6 +49,29 @@
             );
           }
         });
+            
+        const vancBounds = new FeatureLayer({
+            url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/VA_NC_Bounds/FeatureServer",
+            maxScale: 0,
+            minScale: 0,
+            visible: true,
+            elevationInfo: {
+              mode: "on-the-ground",    
+            },
+            renderer: {
+              
+              type: "simple",
+              symbol: {
+                type: "simple-fill",
+                color: [64, 64, 64, 0],
+                outline: {
+                  color: [0,0,0, 0.2],
+                  width: 1,
+                  style: "solid"    
+                }
+              }
+            }
+          });   
                     
         const brpTrails = new FeatureLayer({
           url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Trails_Simplified/FeatureServer",
@@ -760,7 +783,7 @@
         // Set Scene View
 
        var webscene = new WebScene({
-            layers: [baseMap, tileBaseMap, natForests, othNatParks, vancPlaces, brpTrailsBack, brpTrails, tunnels, brpPeaks, brpOverlooks, brpTunnels, intersections, milePosts, brpBridges, brpBuildings3d, trees, stateLabels /*blimpGraphicsLayer*/],
+            layers: [baseMap, tileBaseMap, vancBounds, natForests, othNatParks, vancPlaces, brpTrailsBack, brpTrails, tunnels, brpPeaks, brpOverlooks, brpTunnels, intersections, milePosts, brpBridges, brpBuildings3d, trees, stateLabels /*blimpGraphicsLayer*/],
             ground: {
                 layers: [new ExaggeratedElevationLayer()]
             }
