@@ -6,27 +6,27 @@
         "esri/symbols/PolygonSymbol3D",
         "esri/symbols/ExtrudeSymbol3DLayer",  
         "esri/renderers/SimpleRenderer",  
-        "esri/Graphic",
+        //"esri/Graphic",
         "esri/layers/ElevationLayer",
         "esri/layers/BaseElevationLayer",
-        "esri/widgets/Home",
+        //"esri/widgets/Home",
         "esri/widgets/Zoom",
         "esri/widgets/Expand",  
         "esri/widgets/NavigationToggle/NavigationToggleViewModel", 
         "esri/layers/SceneLayer",
         "esri/layers/WebTileLayer",
-        "esri/widgets/Search",
-        "esri/tasks/Locator",
+        //"esri/widgets/Search",
+        //"esri/tasks/Locator",
         "esri/geometry/Polygon",
         "esri/layers/TileLayer",
         "esri/layers/VectorTileLayer",
-        "esri/widgets/Editor"
+        //"esri/widgets/Editor",
 
       ], function(WebScene, SceneView, Basemap, FeatureLayer, PolygonSymbol3D,
-      ExtrudeSymbol3DLayer, SimpleRenderer, Graphic, ElevationLayer, BaseElevationLayer, Home, Zoom, Expand, NavigationToggleVM, SceneLayer, WebTileLayer, Search, Locator, Polygon, TileLayer, VectorTileLayer, Editor) {
+      ExtrudeSymbol3DLayer, SimpleRenderer, /*Graphic,*/ ElevationLayer, BaseElevationLayer, /*Home,*/ Zoom, Expand, NavigationToggleVM, SceneLayer, WebTileLayer, /*Search,*/ /*Locator,*/ Polygon, TileLayer, VectorTileLayer, /*Editor*/ ) {
         
           
-        var ExaggeratedElevationLayer = BaseElevationLayer.createSubclass({
+        const ExaggeratedElevationLayer = BaseElevationLayer.createSubclass({
           properties: {
             exaggeration: 1.5
           },
@@ -59,7 +59,6 @@
               mode: "on-the-ground",    
             },
             renderer: {
-              
               type: "simple",
               symbol: {
                 type: "simple-fill",
@@ -72,22 +71,38 @@
               }
             }
           });   
+
+        /*const trailRender = {
+          type: "simple",
+          symbol: {
+            color: "#694000",
+            type: "simple-line",
+            style: "solid",
+            width: 1
+          }
+        };*/
+
+        const trailRender = {
+          type: "simple",
+          symbol: {
+            type: "line-3d",  // autocasts as new LineSymbol3D()
+            symbolLayers: [{
+              type: "line",  // autocasts as new LineSymbol3DLayer()
+              size: 1,  // points
+              material: { color: "#543400" },
+              cap: "round",
+              join: "round"
+            }]
+          }  
+        };
                     
         const brpTrails = new FeatureLayer({
           url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Trails_Simplified/FeatureServer",
-          opacity: 0.4,
+          opacity: 0.6,
           maxScale: 0,
-          minScale: 100000,    
+          minScale: 75000,    
           visible: true,
-          renderer: {
-            type: "simple",
-            symbol: {
-              color: "#8c5600",
-              type: "simple-line",
-              style: "solid",
-              width: 1
-            }
-          },
+          renderer: trailRender,
           popupTemplate: {
                 outFields: ["*"],
                   //title: "{name_e}",
@@ -112,26 +127,32 @@
             return popupElementThree;
             
         }; 
+
+        const trailRenderBack = {
+          type: "simple",
+          symbol: {
+            type: "line-3d",  // autocasts as new LineSymbol3D()
+            symbolLayers: [{
+              type: "line",  // autocasts as new LineSymbol3DLayer()
+              size: 5,  // points
+              material: { color: "#e0b775" },
+              cap: "round",
+              join: "round"
+            }]
+          }  
+        };
           
         const brpTrailsBack = new FeatureLayer({
           url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Trails_Simplified/FeatureServer",
-          opacity: 0.3,
+          opacity: 0.5,
           visible: true,
           maxScale: 0,
-          minScale: 75000,    
+          minScale: 15000,    
           popupEnabled: false,
-          renderer: {
-            type: "simple",
-            symbol: {
-              color: "#cc7d00",
-              type: "simple-line",
-              style: "solid",
-              width: 2
-            }
-          },    
-        });  
-               
-        ////////////Context Layers/////////////
+          renderer: trailRenderBack   
+        }); 
+              
+////////////Context Layers/////////////
                     
         const placesLabel = {
            labelPlacement: "above-center",
@@ -147,14 +168,14 @@
                     color: [102, 102, 102]
                   },
                   halo: {
-                    color: [255, 255, 255, 0.5],
+                    color: [255, 255, 255, 0.8],
                     size: 1
                   },
                   font: {
                     weight: "normal",
                     family: "Roboto Mono"
                   },
-                  size: 7,   
+                  size: 8,   
                 }],
                 verticalOffset: {
                   screenLength: 60,
@@ -191,28 +212,8 @@
                 }
             },
             labelingInfo: []
-        });  
-          
-        const natForests = new FeatureLayer({
-          url:
-            "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/National_Forests/FeatureServer",
-          elevationInfo: {
-            mode: "on-the-ground",
-          },
-          renderer: {
-              type: "simple",
-              symbol: {
-                type: "polygon-3d",
-                symbolLayers: [{
-                  type: "fill",
-                  material: {
-                    color: [181, 252, 172, 0.3]
-                  }
-                }]
-              }
-            }
-        });  
-          
+        }); 
+            
         const natParkLabel = {
            labelPlacement: "above-center",
               labelExpressionInfo: {
@@ -227,14 +228,14 @@
                     color: [102, 102, 102]
                   },
                   halo: {
-                    color: [255, 255, 255, 0.5],
+                    color: [255, 255, 255, 1],
                     size: 1
                   },
                   font: {
                     weight: "normal",
                     family: "Roboto Mono"
                   },
-                  size: 9,   
+                  size: 8,   
                 }],
                 verticalOffset: {
                   screenLength: 80,
@@ -251,26 +252,28 @@
                 }
               } 
         };  
-          
+        
         const othNatParks = new FeatureLayer({
               url:
                 "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/Oth_National_Parks/FeatureServer",
               elevationInfo: {
                 mode: "on-the-ground",
               },
+              maxScale: 0,
+              minScale: 150000,
               renderer: {
                   type: "simple",
                   symbol: {
                     type: "simple-fill",
-                    color: [161, 142, 93, 0.5],
+                    color: [161, 142, 93, 0],
                     outline: {
                         color: "#665b3f",
-                        width: 1,
+                        width: 0,
                         style: "solid"
                     }
                  }
               },
-              labelingInfo: []
+              labelingInfo: [natParkLabel]
         });  
                     
         const overlookLabel = {
@@ -287,14 +290,14 @@
                     color: [0, 0, 0]
                   },
                   halo: {
-                    color: [255, 255, 255, 0.8],
+                    color: [255, 255, 255, 1],
                     size: 1
                   },
                   font: {
                     weight: "normal",
                     family: "Roboto Mono"
                   },
-                  size: 7,   
+                  size: 8.5,   
                 }],
                 VerticalOffset: {
                   screenLength: 7,
@@ -541,7 +544,7 @@
                     color: [0, 0, 0]
                   },
                   halo: {
-                    color: [255, 255, 255, 0.8],
+                    color: [255, 255, 255, 1],
                     size: 1
                   },
                   font: {
@@ -549,7 +552,7 @@
                     family: "Roboto Mono"
                   },
                       
-                  size: 6,   
+                  size: 7.5,   
                 }],
               } 
             }]
@@ -617,7 +620,7 @@
                     color: [0, 0, 0]
                   },
                   halo: {
-                    color: [255, 255, 255, 0.8],
+                    color: [255, 255, 255, 1],
                     size: 1
                   },
                   font: {
@@ -625,7 +628,7 @@
                     family: "Roboto Mono"
                   },
                       
-                  size: 7,   
+                  size: 7.5,   
                 }],
               } 
             }]
@@ -661,12 +664,9 @@
             popupElementInter.innerHTML = "<table><tbody><tr><td><h1>Blue Ridge Parkway Access</h1></td></tr></tbody></table><h3><b>Road Name: </b>" + results.Name + "</h3><h3><b>Milepost: </b>" + results.MilePost + "</h3>";
 
             return popupElementInter;
-
         };  
           
-          
-        ////////////3d Buildings and Trees//////////////
-          
+////////////3d Buildings, Bridges and Trees//////////////
           
         const brpBridges = new FeatureLayer ({
            url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Bridges_Points/FeatureServer/0",
@@ -677,7 +677,6 @@
            opacity: 1,
         });
           
-          
         const tunnelRenderer = {
             type: "simple",
             symbol: {
@@ -686,7 +685,7 @@
                     {
                         type: "object",
                         resource: {
-                            href: "./3d/Tunnel_Entrance.glb"
+                            href: "./3d/Tunnel_Face.glb"
                         },
                         height: 15,
                         anchor: "relative",
@@ -711,25 +710,37 @@
         });
            
         const brpBuildings3d = new FeatureLayer ({
-           url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Buildings_Points/FeatureServer",
+           url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Buildings_PointZM_Z/FeatureServer",
            renderer: buildingRenderer,
            elevationInfo: {
-                mode: "on-the-ground",
-           }, 
+              mode: "absolute-height"
+           },
            opacity: 1,
-        });  
+        });
           
         const trees = new FeatureLayer({
             url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Trees/FeatureServer",
             elevationInfo: {
                 mode: "on-the-ground",
             },
-            opacity: 0.8,
+            opacity: 0.7,
             maxScale: 0,
-            minScale: 30000,
+            minScale: 35000,
             renderer: treeRenderer,
-        });  
-        ////////////State Labels//////////////
+        });
+        
+        const moreTrees = new FeatureLayer({
+          url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/More_Trees/FeatureServer",
+          elevationInfo: {
+              mode: "on-the-ground",
+          },
+          opacity: 0.7,
+          maxScale: 0,
+          minScale: 20000,
+          renderer: treeRenderer,
+      });
+
+////////////State Labels//////////////
           
         var labelRenderer = new SimpleRenderer({
             symbol: new PolygonSymbol3D({
@@ -764,8 +775,7 @@
             elevationInfo: {
                 mode: "relative-to-ground",
                 offset: 200,
-                unit: "foot"
-                
+                unit: "feet"
            }, 
         });            
           
@@ -773,7 +783,7 @@
         ////////////Tile Layers: Non-BRP Roads & Waterways//////////////  
            
         const tileBaseMap = new VectorTileLayer({
-            url:"https://tiles.arcgis.com/tiles/uX5kr9HIx4qXytm9/arcgis/rest/services/BRP_Base_Map_Mask_Border_V2/VectorTileServer",
+            url:"https://tiles.arcgis.com/tiles/uX5kr9HIx4qXytm9/arcgis/rest/services/BRP_Base_Map_New_07152021/VectorTileServer",
         });  
         
         const baseMap = new TileLayer({
@@ -783,7 +793,7 @@
         // Set Scene View
 
        var webscene = new WebScene({
-            layers: [baseMap, tileBaseMap, vancBounds, natForests, othNatParks, vancPlaces, brpTrailsBack, brpTrails, tunnels, brpPeaks, brpOverlooks, brpTunnels, intersections, milePosts, brpBridges, brpBuildings3d, trees, stateLabels /*blimpGraphicsLayer*/],
+            layers: [baseMap, tileBaseMap, vancBounds, othNatParks, vancPlaces, brpTrailsBack,brpTrails, tunnels, brpPeaks, brpOverlooks, brpTunnels, intersections, milePosts, brpBridges, brpBuildings3d, moreTrees, trees, stateLabels /*blimpGraphicsLayer*/],
             ground: {
                 layers: [new ExaggeratedElevationLayer()]
             }
@@ -804,12 +814,10 @@
           popup: {
               collapseEnabled: false,
               featureNavigationEnabled: true, 
+              dockEnabled: true,
               dockOptions: {
                   buttonEnabled: false,
-                  breakpoint: {
-                      height: 1000,
-                      width: 600
-                  }
+                  breakpoint: false
               } 
           },    
           ui: {
@@ -837,7 +845,7 @@
           },
           constraints: {
               altitude: {
-                min: 1200,
+                min: 700,
                 max: 900000,
               },
               tilt: {
@@ -850,11 +858,11 @@
           
         view.popup.viewModel.actions = false;  
           
-         /*         var editor = new Editor({
-            view: view
-          });
-          // Add widget to top-right of the view
-          view.ui.add(editor, "top-right");  */
+        /*var editor = new Editor({
+          view: view
+        });
+        // Add widget to top-right of the view
+        view.ui.add(editor, "top-right");*/
         
         ////////////Add Scale-Based Renderers///////////////  
           
@@ -875,17 +883,10 @@
         view.when().then(function() {     
             view.watch("scale", function(newValue) {
             vancPlaces.labelingInfo =
-              newValue <= 30000 ? [placesLabel]: [];
+              newValue <= 50000 ? [placesLabel]: [];
           });
         });
-          
-        view.when().then(function() {     
-            view.watch("scale", function(newValue) {
-            othNatParks.labelingInfo =
-              newValue <= 75000 ? [natParkLabel]: [];
-          });
-        });  
-          
+
         view.when().then(function() {     
             view.watch("scale", function(newValue) {
             brpOverlooks.labelingInfo =
@@ -907,7 +908,7 @@
           });
         });
 
-   
+
 //////Radio Buttons/////
        
       $(document).ready(function() {
@@ -1072,9 +1073,8 @@
             } 
         }
                     
-////////////End Radio Button Test///////////////////  
+////////////End Radio Buttons///////////////////  
                     
-          
    view.when(function() {
         return brpOverlooks.when(function() {
           var query = brpOverlooks.createQuery();
@@ -1085,8 +1085,6 @@
       .then(getUniqueValues)
       .then(addToSelect);
           
-
-
     function getValues(response) {    
     
       var features = response.features;  
@@ -1142,24 +1140,20 @@
             function onClick(event) {
               queryOverlooks.where = "Name='" + event.target.value + "'";
               overlookLayer.queryFeatures(queryOverlooks).then(function (result) {
-                // if a feature is already highlighted, then remove the highlight
                 if (highlightSelect) {
                   highlightSelect.remove();
                 }
-                // the feature to be highlighted
                 var feature = result.features[0];
-                //return feature;  
-                // use the objectID to highlight the feature
                 highlightSelect = layerView.highlight(
                   feature.attributes["FID"]
                 );
-                // center the feature
+
                 view
                   .goTo(
                     {
                       target: feature.geometry,
-                      tilt: 50,
-                      zoom: 15
+                      tilt: 30,
+                      zoom: 16
                     },
                     {
                       duration: 2000,
@@ -1184,56 +1178,8 @@
         });  
           
 
-////////////Zoom Stuff for Milemarkers///////////////////
-
-   view.when(function() {
-        return milePosts.when(function() {
-          var query = milePosts.createQuery();
-          return milePosts.queryFeatures(query);
-        });
-      })
-      .then(getValuesMP)
-      .then(getUniqueValuesMP)
-      .then(addToSelectMP);
-          
-
-
-    function getValuesMP(response) {    
-    
-      var features = response.features;  
-      var values = features.map(function(feature) {
-            return feature.attributes.MILEPOST;
-
-      });
-      return values;
-    }
-           
-    function getUniqueValuesMP(values) {
-      var uniqueValues = [];
-
-      values.forEach(function(item, i) {
-        if (
-          (uniqueValues.length < 1 || uniqueValues.indexOf(item) === -1) &&
-          item !== ""
-        ) {
-          uniqueValues.push(item);
-        }
-      });
-      return uniqueValues;
-    }
-
-    function addToSelectMP(values) {
-      values.sort(function(a, b){return a-b});
-      values.forEach(function(value) {
-        var option = document.createElement("option");
-        option.text = value;
-        mpFilter.add(option);
-      });
-    }
-                      
-    //Dropdown Menu Milemarkers//
-          
-            
+////////////Milemarker Search///////////////////
+       
         webscene.when(function () {
             
           var mpLayer = milePosts;
@@ -1243,43 +1189,74 @@
             var queryMileposts = mpLayer.createQuery();
               
             var selectOne = document.getElementById("mpFilter");
+            var selectSubmit = document.getElementById("mpFilterSubmit");
             
-            selectOne.addEventListener("change", onClick);
+            selectOne.addEventListener("keyup", onClick);
+            selectSubmit.addEventListener("click", onClick);
               
             function onClick(event) {
-              queryMileposts.where = "MILEPOST='" + event.target.value + "'";
-              mpLayer.queryFeatures(queryMileposts).then(function (result) {
+              if ((event.type === 'keyup' && event.which === 13) || event.type == 'click') {
+                queryMileposts.where = "MILEPOST='" + selectOne.value + "'";
+                mpLayer.queryFeatures(queryMileposts).then(function (result) {
 
-                var feature = result.features[0];
-                
-                view
-                  .goTo(
-                    {
-                      target: feature.geometry,
-                      tilt: 30,
-                      zoom: 16
-                    },
-                    {
-                      duration: 2000,
-                      easing: "linear"
-                    }
-                  )
-              });
-            }
+                  var feature = result.features[0];
+
+                  view
+                    .goTo(
+                      {
+                        target: feature.geometry,
+                        tilt: 30,
+                        zoom: 16
+                      },
+                      {
+                        duration: 2000,
+                        easing: "linear"
+                      }
+                    )
+                });
+              }
+            }     
 
           });
         });
-          
+
+        var max = 469;
+        $('#mpFilter').keyup(function(){
+
+            var inputValue = $(this).val();
+            if(inputValue > max){
+                    //alert('greater!');
+                    document.getElementById("mpFilter").placeholder = "Search milposts 0 - 469";
+                $(this).val('')
+            }
+        })
+
     //Legend Button//
           
         $(document).ready(function(){
           $("#infoButton").click(function(){
             $("#legendBox").fadeToggle(100);
             $(".esri-icon-documentation").toggleClass('click');
+            if ($(window).width() <= 580 || $(window).height() <= 500 ) {
+              $('#filterDiv').css({'display': 'none'})
+              $(".toggle").removeClass('toggle-clicked');
+              $("#toggle").prop('checked', true);
+           }
           });
         });  
 
+      //Toggle Button//
     
+      $(document).ready(function(){
+        $("#toggle").click(function(){
+          $("#filterDiv").fadeToggle(100);
+          $(".toggle").toggleClass('toggle-clicked');
+          if ($(window).width() <= 580 || $(window).height() <= 500 ) {
+            $('#legendBox').css({'display': 'none'})
+            $(".esri-icon-documentation").removeClass('click');
+         }
+        });
+      });
           
           
         

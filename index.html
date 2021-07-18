@@ -13,7 +13,7 @@
 <title>Mapping the Blue Ridge Parkway</title>
 
     <link rel="stylesheet" href="style.css"/>
-    <link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/css/main.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.17/esri/css/main.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
       
@@ -34,7 +34,7 @@
    <div id="titleDiv"><h1 class="titleText">Mapping the Blue Ridge Parkway</h1></div>
       
    <div id="filterDiv">
-        <h3 class="menuText">Zoom to a Point of Interest</h3>
+        <h3 class="menuText">Find a Parkway Location</h3>
         <p class="radio">
           <input type="radio" id="overlook" name="type" value="overlook" checked><label for="overlook">Overlooks</label>
           <br>
@@ -46,69 +46,105 @@
             <option value="">(Select an Overlook)</option>
         </select>
         <h3 class="menuText">Zoom to a Milemarker</h3>
-        <select id="mpFilter" class="dropdown">
-            <option value="">(Choose a Milemarker)</option>
-        </select>
+        <div class="mpHolder">
+          <input type="number" min="0" max="469" id="mpFilter" name="milepost" placeholder="Enter a milepost ( 0 - 469 )"><br>
+          <button id="mpFilterSubmit">Zoom</button>
+        </div>  
     </div> 
     
     <div id="legendBox">
-        <h2>Legend</h2>
-        <div id="legendHolder">
-            <div class="wrapper">
-              <img class='legend' alt='' src='img/Camping_White.png'/>
-              <span class="text">Camping</span>
-            </div>
-            <div class="wrapper">
-              <img class='legend' alt='' src='img/Lodging_White.png'/>
-              <span class="text">Lodging</span>
-            </div>
-            <div class="wrapper">
-              <img class='legend' alt='' src='img/Maintenance_White.png'/>
-              <span class="text">Maintenance Facility</span>
-            </div>
-            <div class="wrapper">
-              <img class='legend' alt='' src='img/Overlook_White.png'/>
-              <span class="text">Overlook</span>
-            </div>    
-            <div class="wrapper">
-              <img class='legend' alt='' src='img/State_Route.png'/>
-              <span class="text">Parkway Access Point</span>
-            </div>
-            <div class="wrapper">
-              <img class='legend' alt='' src='img/Entrance_White.png'/>
-              <span class="text">Parkway Terminus</span>
-            </div>
-            <div class="wrapper">
-              <img class='legend' alt='' src='img/Picnic_White.png'/>
-              <span class="text">Picnic Area</span>
-            </div>
-            <div class="wrapper">
-              <img class='legend' alt='' src='img/PointofInterest_White.png'/>
-              <span class="text">Point of Interest</span>
-            </div>
-            <div class="wrapper">
-              <img class='legend' alt='' src='img/Tunnel_White.png'/>
-              <span class="text">Tunnel</span>
-            </div>
-            <div class="wrapper">
-              <img class='legend' alt='' src='img/ScenicView_White.png'/>
-              <span class="text">Scenic View</span>
-            </div>
-            <div class="wrapper">
-              <img class='legend' alt='' src='img/Ranger_White.png'/>
-              <span class="text">Visitor Center</span>
-            </div>           
+        <div id="LegContainer">
+          <div id="legendHolder">
+              <div class="wrapper">
+                <span class="legendTitle">Facilities Legend</span>
+              </div>
+              <div class="wrapper">
+                <img class='legend' alt='' src='img/Camping_White.png'/>
+                <span class="text">Camping</span>
+              </div>
+              <div class="wrapper">
+                <img class='legend' alt='' src='img/Lodging_White.png'/>
+                <span class="text">Lodging</span>
+              </div>
+              <div class="wrapper">
+                <img class='legend' alt='' src='img/Maintenance_White.png'/>
+                <span class="text">Maintenance Facility</span>
+              </div>
+              <div class="wrapper">
+                <img class='legend' alt='' src='img/Overlook_White.png'/>
+                <span class="text">Overlook</span>
+              </div>    
+              <div class="wrapper">
+                <img class='legend' alt='' src='img/State_Route.png'/>
+                <span class="text">Parkway Access Point</span>
+              </div>
+              <div class="wrapper">
+                <img class='legend' alt='' src='img/Entrance_White.png'/>
+                <span class="text">Parkway Terminus</span>
+              </div>
+              <div class="wrapper">
+                <img class='legend' alt='' src='img/Picnic_White.png'/>
+                <span class="text">Picnic Area</span>
+              </div>
+              <div class="wrapper">
+                <img class='legend' alt='' src='img/PointofInterest_White.png'/>
+                <span class="text">Point of Interest</span>
+              </div>
+              <div class="wrapper">
+                <img class='legend' alt='' src='img/Tunnel_White.png'/>
+                <span class="text">Tunnel</span>
+              </div>
+              <div class="wrapper">
+                <img class='legend' alt='' src='img/ScenicView_White.png'/>
+                <span class="text">Scenic View</span>
+              </div>
+              <div class="wrapper">
+                <img class='legend' alt='' src='img/Ranger_White.png'/>
+                <span class="text">Visitor Center</span>
+              </div>
+              <br>
+              <div class="wrapper">
+                <span class="legendTitle">Map Legend</span>
+              </div>   
+              <div class="wrapper">
+                <hr class="trail">
+                <span class="text">Hiking Trail</span>
+              </div>
+              <div class="wrapper">
+                <span class="brpBounds"></span> 
+                <span class="text">Parkway Boundaries</span>
+              </div>
+              <div class="wrapper">
+                <span class="nfBounds"></span> 
+                <span class="text">National Forests</span>
+              </div>
+              <div class="wrapper">
+                <span class="npsBounds"></span> 
+                <span class="text">National Parks</span>
+              </div>
+              <div class="wrapper">
+                <span class="popPlaces"></span> 
+                <span class="text">Populated Places</span>
+              </div>        
+          </div>
+          <h2>About</h2>
+          <p class="aboutText">Use this map to explore all 469 miles of the <a href="https://www.nps.gov/blri/index.htm" target="_blank">Blue Ridge Parkway</a> as it winds its way from Virginia to North Carolina. Click on icons to find out more information on Parkway facilities including overlooks, lodging, visitors centers and hiking trails. You can also zoom to points of interest using the tools in the upper left corner of the application.</p><p class="aboutText">The data for this application was created almost entirely in-house using a variety of raw sources including parkway information and map icons from the <a href="https://www.nps.gov" target="_blank">National Park Service</a>, <a href="https://www.usgs.gov/core-science-systems/ngp/national-hydrography/access-national-hydrography-products" target="_blank">hydrography</a> and <a href="https://www.usgs.gov/centers/eros/science/national-land-cover-database?qt-science_center_objects=0#qt-science_center_objects" target="_blank">landcover</a> data from the United States Geological Survey and building footprints and roadways from <a href="https://www.openstreetmap.org/#map=5/38.007/-95.844" target="_blank">Open Street Map</a>. Software used to create the application included ArcMap, QGIS, ArcGIS Pro, Adobe Illustrator and Asset Forge for creating 3d building, bridge and tunnel face models.</p>
+          <h3 style="padding-left: 14px">Copyright © 2021 <a href="https://www.danielhwatts.com" target="_blank">Daniel H. Watts</a></h3>
         </div>
-        <h2>About</h2>
-        <p class="aboutText">Use this map to explore all 469 miles of the <a href="https://www.nps.gov/blri/index.htm" target="_blank">Blue Ridge Parkway</a> as it winds its way from Virginia to North Carolina. Click on icons to find out more information on Parkway facilities including overlooks, lodging, visitors centers and hiking trails. You can also zoom to points of interest using the tools in the upper left corner of the application.</p><p class="aboutText">The data for this application was created almost entirely in-house using a variety of raw sources including parkway information and map icons from the <a href="https://www.nps.gov" target="_blank">National Park Service</a>, <a href="https://www.usgs.gov/core-science-systems/ngp/national-hydrography/access-national-hydrography-products" target="_blank">hydrography</a> and <a href="https://www.usgs.gov/centers/eros/science/national-land-cover-database?qt-science_center_objects=0#qt-science_center_objects" target="_blank">landcover</a> data from the United States Geological Survey and building footprints and roadways from <a href="https://www.openstreetmap.org/#map=5/38.007/-95.844" target="_blank">Open Street Map</a>. Software used to create the application included ArcMap, QGIS, ArcGIS Pro, Adobe Illustrator and Asset Forge for creating 3d building, bridge and tunnel face models.</p>
-        <h3 style="padding-left: 14px">Copyright © 2021 <a href="https://www.danielhwatts.com" target="_blank">Daniel H. Watts</a></h3>
     </div>
       
+    <div title="Toggle Menu" class="visible">
+      <input type="checkbox" id="toggle">
+      <label for="toggle" class="toggle">
+              <span></span>
+              <span></span>
+              <span></span>
+      </label>
+    </div>
     <button id="infoButton" class='esri-icon-documentation'></button> 
       
     <div id="viewDiv"></div>  
     
-    <!--<script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://js.arcgis.com/4.17/"></script>
     <script src="js/renderers.js"></script> 

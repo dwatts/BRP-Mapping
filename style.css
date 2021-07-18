@@ -16,8 +16,8 @@ h1 {
 
 h1.titleText {
    font-family: 'Roboto Mono', sans-serif;
-   font-weight: 800 !important;
-   font-size: 30px !important;
+   font-weight: 800 ;
+   font-size: 30px t;
    padding: 0px 0px 0px 6px !important;
    margin-top: 0px;
    margin-bottom: 0px;   
@@ -46,7 +46,6 @@ h3.menuText {
    font-family: 'Roboto Mono', sans-serif;
    font-weight: 700 !important;
    font-size: 13px !important;
-
    padding-left: 0px;
 }
 
@@ -62,12 +61,12 @@ b.diffText {
 }
 
 a {
-    color: #3288bd;
+    color: #00dd00;
     text-decoration: none;
 }
 
 a:hover {
-    color: #9e0142;
+    color: #e55825;
 }
 
 /***************Search Styling*************/
@@ -140,12 +139,20 @@ a:hover {
     padding-bottom: 10px;
 }
 
+.esri-ui {
+  z-index: 1000 !important;
+}
+
 .esri-popup__main-container {
-    border-radius: 2px !important;
+    border-radius: 5px !important;
     border: 0px solid #000;
     /*width: 500px !important;*/
     width: auto;
     height: auto;
+}
+
+.esri-popup--shadow {
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.2) !important;
 }
 
 .esri-popup__title {
@@ -178,7 +185,7 @@ a:hover {
   background-color: transparent !important;
   position: absolute;
   bottom: 14px;
-  left: 15px;
+  right: 15px;
   padding-left: 0px !important;
   margin-left: 0px !important;
 }
@@ -188,7 +195,7 @@ a:hover {
 }
 
 .esri-zoom .esri-widget--button:last-child {
-  border-top: 2px solid #000000 !important;
+  border-top: 0px solid #000000 !important;
 }
 
 .esri-navigation-toggle:hover,
@@ -198,10 +205,14 @@ a:hover {
 
 .esri-zoom .esri-widget--button {
   color: #000 !important;
-  background-color: #ffff !important;
-  border: 2px solid #000 !important;
-  border-radius: 40% !important;
+  background-color: rgba(255,255,255, 0.8) !important;
+  border: 0px solid #000 !important;
+  border-radius: 5px !important;
   margin-top: 3px !important;
+}
+
+.esri-widget--button {
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.2) !important;
 }
 
 .esri-widget--button:hover {
@@ -209,60 +220,67 @@ a:hover {
   color: #000 !important;
 }
 
-
 /***********Info / Legend ************/
 
-#legendBox {
-    position: absolute;
-    /*background: #fff;*/
-    background: rgba(255,255,255, 0.8);
-    z-index: 1001;
-    width: 300px;
-    height: 350px;
-    left: 15px;
-    bottom: 130px;
-    border-radius: 5px;
-    display: none;
-    overflow-y: auto;
-}
-
-#legendHolder {
-    width: 100%;
-    padding-top: 5px;
-}
-
-.aboutText {
-    padding-left: 14px;
-    padding-right: 14px;
-    text-align: justify;
-    font-size: 13px;
-    font-family: 'Roboto Mono', sans-serif;
-    font-weight: 400;
-}
-
 .esri-icon-documentation {
-    position: absolute;
-    bottom: 85px;
-    left: 15px;
-    padding: 6px;
-    text-align: center;
-    text-decoration: none;
-    z-index: 1001;
-    color: #000 !important;
-    background-color: #fff !important;
-    border: 2px solid #000 !important;
-    border-radius: 40% !important;
-    cursor: pointer;
-    margin-left: 0px !important;
+  position: absolute;
+  bottom: 85px;
+  right: 15px;
+  padding: 8px;
+  text-align: center;
+  text-decoration: none;
+  z-index: 1;
+  color: #000 !important;
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  border: 0px solid #000 !important;
+  border-radius: 5px !important;
+  cursor: pointer;
+  margin-left: 0px !important;
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.2);
 }
 
 .esri-icon-documentation:hover {
-    background-color:  #4feb34 !important;
-    color: #000 !important;
+  background-color:  #4feb34 !important;
+  color: #000 !important;
 }
 
 .esri-icon-documentation.click {
-    background-color:  #4feb34 !important;
+  background-color:  #4feb34 !important;
+}
+
+#legendBox {
+  position: absolute;
+  /*background: #fff;*/
+  background: rgba(255,255,255, 0.8);
+  z-index: 1001;
+  width: 300px;
+  height: 350px;
+  right: 15px;
+  bottom: 130px;
+  border-radius: 5px;
+  display: none;
+  /*overflow-y: auto;*/
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.2) !important;
+  padding: 10px;
+}
+
+#legContainer {
+  overflow-y: auto;
+  height: 99%;
+}
+
+#legendHolder {
+  width: 100%;
+  padding-top: 5px;
+}
+
+.aboutText {
+  padding-left: 14px;
+  padding-right: 14px;
+  text-align: justify;
+  font-size: 13px;
+  font-family: 'Roboto Mono', sans-serif;
+  font-weight: 400;
 }
 
 .wrapper {
@@ -280,6 +298,15 @@ a:hover {
 .legend {
   height: 20px;
   width: 20px;
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.2) !important;
+}
+
+.legendTitle {
+  font-family: 'Roboto Mono', sans-serif;
+  font-weight: 600 !important;
+  font-size: 20px !important;
+  margin-bottom: 15px;
+  margin-top: 15px; 
 }
 
 .text {
@@ -289,6 +316,49 @@ a:hover {
   font-weight: 400;    
 }
 
+.trail {
+  border-top: 3px solid #e0b775;
+  border-bottom: 3px solid #e0b775;
+  background-color: #543400;
+  opacity: 1;
+  width: 32px;
+  height: 2px;
+  margin: 0px;
+  border-radius: 2px;
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.2) !important;
+}
+
+.brpBounds {
+  height: 12px;
+  width: 30px;
+  border: 1px solid #4D6E4E;
+  background-color: rgba(74, 168, 99, 0.4);
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.2) !important;
+}
+
+.nfBounds {
+  height: 12px;
+  width: 30px;
+  border: 1px solid rgba(181, 252, 172, 1);
+  background-color: rgba(181, 252, 172, 0.6);
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.2) !important;
+}
+
+.npsBounds {
+  height: 12px;
+  width: 30px;
+  border: 1px solid rgba(161, 142, 93, 0.6);
+  background-color: rgba(161, 142, 93, 0.4);
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.2) !important;
+}
+
+.popPlaces {
+  height: 12px;
+  width: 30px;
+  border: 1px solid rgba(161, 161, 161, 0.4);
+  background-color: rgba(161, 161, 161, 0.4);
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.2) !important;
+}
 
 /***************Tooltip Styling*************/
 
@@ -325,65 +395,184 @@ a:hover {
   visibility: visible;
 }*/
 
+/**********Custom Scrollbar***********/
+
+/* width */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #cecece; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #000; 
+}
+
 /*************Dropdown Styling*************/
 
 #titleDiv {
     position: fixed;
     bottom: 15px;
-    right: 15px;
-    visibility: visible;
+    left: 15px;
     z-index: 1000;
     padding: 10px;
     width: 547px;
-    background: rgba(255,255,255, 0.3);
+    background: rgba(255,255,255, 0.7);
     text-align: center;
-    border-radius: 2px;
+    border-radius: 5px;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.2) !important;
 }
 
 #filterDiv {
     position: fixed;
     top: 15px;
     left: 15px;
-    visibility: visible;
+    width: 300px;
     z-index: 1000;
     padding: 10px;
-    background: rgba(255,255,255, 0.3);
-    border-radius: 2px;
+    background: rgba(255,255,255, 0.7);
+    border-radius: 5px;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.2) !important;
+}
+
+.mpHolder {
+  display: flex;
+  flex-direction: row;
 }
 
 #mpFilter {
     display: block;
-    width: 300px;
+    width: 70%;
     height: 30px;
     position: relative;
     z-index: 1000;
     font-family: 'Roboto Mono', sans-serif;
     font-weight: 500;
     font-size: 10px;
-    border: 2px solid #000;
+    border: 0px solid #000;
     border-radius: 3px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+}
+
+#mpFilterSubmit {
+  margin-left: 5px;
+  width: 30%;
+  border: 0px solid #000;
+  background-color: rgb(255, 255, 255, 0.8);
+  border-radius: 3px;
+  font-family: 'Roboto Mono', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+}
+
+#mpFilterSubmit:hover {
+  cursor: pointer;
+  background-color: #4feb34;
+  font-weight: 700;
 }
 
 #stateFilter {
     display: block;
-    width: 300px;
+    width: 100%;
     height: 30px;
     position: relative;
     z-index: 1000;
     font-family: 'Roboto Mono', sans-serif;
     font-weight: 500;
     font-size: 10px;
-    border: 2px solid #000;
+    border: 0px solid #000;
     border-radius: 3px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+}
+
+/****************************Menu Button***********************/
+
+#toggle {
+  display: none;
+}
+
+.toggle {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  border: 0px solid #4a4a4a !important;
+  border-radius: 5px !important;
+  padding: 6.5px 5.5px 6.5px 5.5px; 
+  position: absolute;
+  bottom: 145px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 1;
+  display: none !important;
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.2);
+}
+
+.toggle:hover {
+  background-color: #4feb34 !important;
+}
+
+.toggle-clicked {
+  background-color: #4feb34 !important;
+}
+
+.toggle > span{
+  display: block;
+  top: 2px;
+  left: 0px;
+  width: 17.5px;
+  height: 1px;
+  margin-bottom: 4px;
+  position: relative;
+  background: #000;
+  border-radius: 3px;
+  transform-origin: center;  
+  transition: transform .5s;
+}
+
+input#toggle ~ .toggle > span{
+  transform: translateY(5px) rotate(-45deg);
+}
+
+input#toggle ~ .toggle > span:nth-child(2){
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+input#toggle ~ .toggle > span:nth-child(3){
+  transform: translateY(-5px) rotate(45deg);
+}
+
+input#toggle:checked ~ .toggle > span{
+  transform: translateY(0px) rotate(0deg);
+}
+
+input#toggle:checked ~ .toggle > span:nth-child(2){
+  opacity: 1;
+}
+
+input#toggle:checked ~ .toggle > span:nth-child(3){
+  transform: translateY(0px) rotate(0deg);
+}
+
+.toggle {
+  display: inline-block;
 }
 
 /*************Radio Button Styling*************/
 
 .radio {
-    font-size: 13;
-    font-family: 'Roboto Mono', sans-serif;
-    font-weight: 400;
-    margin: 0px
+  font-size: 13;
+  font-family: 'Roboto Mono', sans-serif;
+  font-weight: 400;
+  margin: 0px
 }
 
 input[type="radio"] {
@@ -429,4 +618,189 @@ input[type="radio"]:checked + label:before {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
   box-shadow: inset 0 0 0 0.2em black, inset 0 0 0 1em #4feb34;
+}
+
+/*************Format Number Input*************/
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  padding-left: 5px !important;
+}
+
+/*****Responsive Code******/
+
+@media (max-width: 580px) {
+  
+  #titleDiv {
+    bottom: 10px;
+    left: 10px;
+    padding: 5px;
+    width: calc(100% - 30px) !important;
+    border-radius: 5px;
+  } 
+
+  h1.titleText {
+    font-size: 4.7vw !important;
+  }
+
+  .esri-icon-documentation {
+    bottom: 113px;
+    padding: 6px;
+    right: 10px;
+    z-index: 1;
+  }
+
+  .esri-zoom {
+    bottom: 50px;
+    right: 10px;
+  }
+
+  .esri-widget--button {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .toggle {
+    display: block !important;
+  }
+
+  #filterDiv {
+    width: calc(100% - 40px);
+    top: 10px;
+    left: 10px;
+    display: block;
+  }
+
+  .esri-popup__main-container {
+    margin-bottom: 50px !important;
+    margin-left: 10px !important;
+    max-width: calc(100% - 20px) !important;
+    max-height: 250px !important;
+  }
+
+  h1 {
+    font-size: 20px !important;
+  }
+
+  h3 {
+    font-size: 11px;
+  }
+
+  .icon {
+    height: 40px;
+    width: 40px;
+  }
+
+  .iconText {
+    font-size: 9px !important;
+  }
+
+  #legendBox {
+    width: calc(100% - 40px);
+    height: 250px;
+    left: 10px;
+    top: 10px;
+  }
+
+  .radio {
+    font-size: 11px;
+  }
+
+}
+
+@media (max-width: 1500px) {
+  h1 {
+    font-size: 22px;
+  }
+
+  .icon {
+    height: 40px;
+    width: 40px;
+  }
+
+  .iconText {
+    font-size: 10px;
+  }
+  
+  #titleDiv {
+    width: 447px;
+  }
+
+  h1.titleText {
+    font-size: 24px;
+  }
+
+  .esri-popup__main-container {
+    width: 360px !important;
+  }
+}
+
+@media (max-height: 500px) {
+  #titleDiv {
+    bottom: 10px;
+    left: 10px;
+    padding: 5px;
+    width: 450px !important;
+    border-radius: 5px;
+  } 
+
+  h1.titleText {
+    font-size: 3vw !important;
+  }
+
+  .esri-icon-documentation {
+    bottom: 72px;
+    padding: 6px;
+    right: 10px;
+    z-index: 1;
+  }
+
+  .esri-zoom {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .esri-widget--button {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .toggle {
+    display: block !important;
+    bottom: 103px !important;
+  }
+
+  #legendBox {
+    width: 300px;
+    height: 200px;
+    left: 10px;
+    top: 10px;
+  }
+
+  #filterDiv {
+    left: 10px;
+    top: 10px;
+  }
+
+  .esri-popup__main-container {
+    width: 375px !important;
+    height: 250px !important;
+    top: -5px;
+    right: -5px;
+  }
+
+  .icon {
+    height: 40px;
+    width: 40px;
+  }
+
 }

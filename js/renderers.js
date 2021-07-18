@@ -1,4 +1,4 @@
-/////////////////////Milepost Renderer////////////////
+/////////////////////Bridge Renderer////////////////
 
     const bridgeRenderer = {
             type: "unique-value",
@@ -85,10 +85,37 @@
                             }
                         ]   
                     }
+                },
+                {
+                    value: "6",
+                    symbol: {
+                    type: "point-3d",
+                    symbolLayers: [
+                        {
+                            type: "object",
+                            resource: {
+                                href: "./3d/Bridge_5.glb"
+                                }
+                            }
+                        ]   
+                    }
+                },
+                {
+                    value: "7",
+                    symbol: {
+                    type: "point-3d",
+                    symbolLayers: [
+                        {
+                            type: "object",
+                            resource: {
+                                href: "./3d/Bridge_6.glb"
+                                }
+                            }
+                        ]   
+                    }
                 }
             ]
-        };  
-
+    };  
 
 /////////////////////Milepost Renderer////////////////
 
@@ -535,58 +562,6 @@ var overlookRendererThree = {
 
 /////////////////////End Overlook Renderer////////////////
 
-/*function getTreeType(treeModel) {
-  return {
-    type: "point-3d",
-        symbolLayers: [
-              {
-                type: "object",
-                resource: {
-                  href: treeModel
-                },
-                anchor: "bottom",
-                height: 15  
-              }
-        ]
-    };
-}      
-                            
-var treeRenderer = {
-    type: "unique-value",
-    field: "TreeType",
-    uniqueValueInfos: [
-        {
-            value: 1,
-            symbol: getTreeType (
-                "./3d/tree_pineRoundF.glb"
-            )
-        },
-        {
-            value: 2,
-            symbol: getTreeType (
-                "./3d/tree_pineRoundD.glb"
-            )
-        },
-        {
-            value: 3,
-            symbol: getTreeType (
-                "./3d/test_Pine.glb"
-            )
-        },
-        {
-            value: 4,
-            symbol: getTreeType (
-                "./3d/tree_default.glb"
-            )
-        },
-        {
-            value: 5,
-            symbol: getTreeType (
-                "./3d/tree_cone_dark.glb"
-            )
-        }
-    ]
-};*/
 
 /////////////////////Tree Renderer////////////////
 
@@ -642,8 +617,8 @@ function getBuildingType(buildingModel) {
                     resource: {
                         href: buildingModel
                     },
-                    height: 7,
-                    anchor: "bottom"
+                    /*height: 7,
+                    anchor: "bottom"*/
                 }
             ]
         }
@@ -654,10 +629,16 @@ var buildingRenderer = {
     field: "building",
     visualVariables: [
         {
+            type: "size",
+            field: "Size",
+            axis: "height",
+            valueUnit: "meters"
+        },
+        {
             type: "rotation",
             field: "Rotation",
-            rotationType: "geographic",
-            axis: "heading"
+            /*rotationType: "geographic",
+            axis: "heading"*/
         }
     ],
     uniqueValueInfos: [
@@ -725,6 +706,24 @@ var buildingRenderer = {
             value: "Church",
             symbol: getBuildingType (
                 "./3d/Church.glb"
+            ),
+        },
+        {
+            value: "Cone",
+            symbol: getBuildingType (
+                "./3d/Cone.glb"
+            ),
+        },
+        {
+            value: "Boat",
+            symbol: getBuildingType (
+                "./3d/Boat.glb"
+            ),
+        },
+        {
+            value: "BoatTwo",
+            symbol: getBuildingType (
+                "./3d/Boat_Two.glb"
             ),
         }
     ]
@@ -942,5 +941,4 @@ var rendTunnLarge = {
         }
     ]
 };
-
 
