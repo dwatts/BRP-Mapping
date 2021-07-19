@@ -1231,17 +1231,17 @@
 
     //Legend Button//
           
-        $(document).ready(function(){
-          $("#infoButton").click(function(){
-            $("#legendBox").fadeToggle(100);
-            $(".esri-icon-documentation").toggleClass('click');
-            if ($(window).width() <= 580 || $(window).height() <= 500 ) {
-              $('#filterDiv').css({'display': 'none'})
-              $(".toggle").removeClass('toggle-clicked');
-              $("#toggle").prop('checked', true);
-           }
-          });
-        });  
+      $(document).ready(function(){
+        $("#infoButton").click(function(){
+          $("#legendBox").fadeToggle(100);
+          $(".esri-icon-documentation").toggleClass('click');
+          if ($(window).width() <= 580 || $(window).height() <= 500 ) {
+            $('#filterDiv').css({'display': 'none'})
+            $(".toggle").addClass('toggle-clicked');
+            $("#toggle").prop('checked', true);
+          }
+        });
+      });  
 
       //Toggle Button//    
       $(document).ready(function(){

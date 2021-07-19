@@ -475,11 +475,11 @@ a:hover {
 }
 
 .toggle:hover {
-  background-color: rgba(255, 255, 255, 0.8) !important;
+  background-color:#4feb34 !important;
 }
 
-.toggle-clicked {
-  background-color: #4feb34 !important;
+.toggle-clicked { 
+  background-color: rgba(255, 255, 255, 0.8) !important; 
 }
 
 .toggle > span{
