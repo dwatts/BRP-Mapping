@@ -518,7 +518,7 @@ a:hover {
   border-radius: 5px !important;
   padding: 6.5px 5.5px 6.5px 5.5px; 
   position: absolute;
-  bottom: 143px;
+  bottom: 148px;
   right: 10px;
   cursor: pointer;
   z-index: 1;
@@ -665,14 +665,14 @@ input[type=number] {
   }
 
   .esri-icon-documentation {
-    bottom: 112px;
+    bottom: 117px;
     padding: 6px;
     right: 10px;
     z-index: 1;
   }
 
   .esri-zoom {
-    bottom: 50px;
+    bottom: 55px;
     right: 10px;
   }
 
@@ -693,7 +693,7 @@ input[type=number] {
   }
 
   .esri-popup__main-container {
-    margin-bottom: 50px !important;
+    margin-bottom: 55px !important;
     margin-left: 10px !important;
     min-width: calc(100% - 20px) !important;
     width: calc(100% - 20px) !important;

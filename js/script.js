@@ -1245,8 +1245,7 @@
           });
         });  
 
-      //Toggle Button//
-    
+      //Toggle Button//    
       $(document).ready(function(){
         $("#toggle").click(function(){
           $("#filterDiv").fadeToggle(100);
