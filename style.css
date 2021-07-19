@@ -462,6 +462,8 @@ a:hover {
     border-radius: 3px;
     box-shadow: 0px 2px 5px rgba(0,0,0,0.2) !important;
     -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 #mpFilterSubmit {
