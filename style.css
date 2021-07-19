@@ -472,7 +472,7 @@ a:hover {
   width: 30%;
   height: 30px;
   border: 0px solid #000;
-  background-color: rgb(255, 255, 255, 0.8);
+  background-color: rgb(255, 255, 255, 1);
   border-radius: 3px;
   font-family: 'Roboto Mono', sans-serif;
   font-weight: 500;
@@ -693,9 +693,10 @@ input[type=number] {
   }
 
   .esri-popup__main-container {
-    margin-bottom: 50px !important;
+    /*margin-bottom: 50px !important;
     margin-left: 10px !important;
-    max-width: calc(100% - 20px) !important;
+    max-width: calc(100% - 20px) !important;*/
+    width: 100%;
     max-height: 250px !important;
   }
 
