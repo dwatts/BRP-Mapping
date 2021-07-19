@@ -559,10 +559,6 @@ var overlookRendererThree = {
     ]
 };
 
-
-/////////////////////End Overlook Renderer////////////////
-
-
 /////////////////////Tree Renderer////////////////
 
 var treeRenderer = {

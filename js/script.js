@@ -1,31 +1,20 @@
       require([
         "esri/WebScene",
-        "esri/views/SceneView",
-        "esri/Basemap",  
+        "esri/views/SceneView", 
         "esri/layers/FeatureLayer",
         "esri/symbols/PolygonSymbol3D",
         "esri/symbols/ExtrudeSymbol3DLayer",  
         "esri/renderers/SimpleRenderer",  
-        //"esri/Graphic",
         "esri/layers/ElevationLayer",
         "esri/layers/BaseElevationLayer",
-        //"esri/widgets/Home",
-        "esri/widgets/Zoom",
-        "esri/widgets/Expand",  
-        "esri/widgets/NavigationToggle/NavigationToggleViewModel", 
-        "esri/layers/SceneLayer",
-        "esri/layers/WebTileLayer",
-        //"esri/widgets/Search",
-        //"esri/tasks/Locator",
-        "esri/geometry/Polygon",
         "esri/layers/TileLayer",
         "esri/layers/VectorTileLayer",
+        "esri/core/watchUtils",
         //"esri/widgets/Editor",
 
-      ], function(WebScene, SceneView, Basemap, FeatureLayer, PolygonSymbol3D,
-      ExtrudeSymbol3DLayer, SimpleRenderer, /*Graphic,*/ ElevationLayer, BaseElevationLayer, /*Home,*/ Zoom, Expand, NavigationToggleVM, SceneLayer, WebTileLayer, /*Search,*/ /*Locator,*/ Polygon, TileLayer, VectorTileLayer, /*Editor*/ ) {
+      ], function(WebScene, SceneView, FeatureLayer, PolygonSymbol3D,
+      ExtrudeSymbol3DLayer, SimpleRenderer, ElevationLayer, BaseElevationLayer, TileLayer, VectorTileLayer, watchUtils, /*Editor*/ ) {
         
-          
         const ExaggeratedElevationLayer = BaseElevationLayer.createSubclass({
           properties: {
             exaggeration: 1.5
@@ -72,23 +61,13 @@
             }
           });   
 
-        /*const trailRender = {
-          type: "simple",
-          symbol: {
-            color: "#694000",
-            type: "simple-line",
-            style: "solid",
-            width: 1
-          }
-        };*/
-
         const trailRender = {
           type: "simple",
           symbol: {
-            type: "line-3d",  // autocasts as new LineSymbol3D()
+            type: "line-3d",  
             symbolLayers: [{
-              type: "line",  // autocasts as new LineSymbol3DLayer()
-              size: 1,  // points
+              type: "line", 
+              size: 1, 
               material: { color: "#543400" },
               cap: "round",
               join: "round"
@@ -131,10 +110,10 @@
         const trailRenderBack = {
           type: "simple",
           symbol: {
-            type: "line-3d",  // autocasts as new LineSymbol3D()
+            type: "line-3d",  
             symbolLayers: [{
-              type: "line",  // autocasts as new LineSymbol3DLayer()
-              size: 5,  // points
+              type: "line", 
+              size: 5,  
               material: { color: "#e0b775" },
               cap: "round",
               join: "round"
@@ -183,7 +162,7 @@
                   minWorldLength: 10
                 },
                 callout: {
-                  type: "line", // autocasts as new LineCallout3D()
+                  type: "line", 
                   size: .5,
                   color: [0, 0, 0],
                   border: {
@@ -243,7 +222,7 @@
                   minWorldLength: 30
                 },
                 callout: {
-                  type: "line", // autocasts as new LineCallout3D()
+                  type: "line", 
                   size: .5,
                   color: [0, 0, 0],
                   border: {
@@ -305,7 +284,7 @@
                   minWorldLength: 50
                 },
                 callout: {
-                  type: "line", // autocasts as new LineCallout3D()
+                  type: "line", 
                   size: 1,
                   color: [0, 0, 0],
                   border: {
@@ -790,10 +769,10 @@
             url: "https://services.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer"
         })
             
-        // Set Scene View
+        /////Set Scene View/////
 
        var webscene = new WebScene({
-            layers: [baseMap, tileBaseMap, vancBounds, othNatParks, vancPlaces, brpTrailsBack,brpTrails, tunnels, brpPeaks, brpOverlooks, brpTunnels, intersections, milePosts, brpBridges, brpBuildings3d, moreTrees, trees, stateLabels /*blimpGraphicsLayer*/],
+            layers: [baseMap, tileBaseMap, vancBounds, othNatParks, vancPlaces, brpTrailsBack,brpTrails, tunnels, brpPeaks, brpOverlooks, brpTunnels, intersections, milePosts, brpBridges, brpBuildings3d, moreTrees, trees, stateLabels],
             ground: {
                 layers: [new ExaggeratedElevationLayer()]
             }
@@ -808,8 +787,8 @@
             fillOpacity: 0.4
           },    
           map: webscene,
-          //viewingMode: "global",
-          //qualityProfile: "high",
+          viewingMode: "global",
+          qualityProfile: "high",
           alphaCompositingEnabled: false,
           popup: {
               collapseEnabled: false,
@@ -836,12 +815,12 @@
           },
           camera: {
             position: {
-              latitude: 36.549390,   
-              longitude: -80.913475,    
-              z: 850000
+              latitude: 37.41,//36.549390,   
+              longitude: -79.65, //-80.913475,    
+              z:  3311.22//850000
             },
-            tilt: 0,
-            heading: 0
+            tilt: 67.77, //0
+            heading: 51.01 //0
           },
           constraints: {
               altitude: {
@@ -863,6 +842,27 @@
         });
         // Add widget to top-right of the view
         view.ui.add(editor, "top-right");*/
+
+        view.watch('camera.tilt', function(newValue, oldValue, property, object) {
+          console.log(property , newValue);
+        });
+          
+        view.watch('camera.position', function(newValue, oldValue, property, object) {
+          console.log(property , newValue);
+        });
+          
+        view.watch('camera.heading', function(newValue, oldValue, property, object) {
+          console.log(property , newValue);
+        });
+
+        watchUtils.whenTrueOnce(view, "updating", function(evt) {
+          $("#loaderDiv").show();
+        });
+
+        watchUtils.whenFalse(view, "updating", function(evt) {
+          $("#loaderDiv").hide();
+        });
+
         
         ////////////Add Scale-Based Renderers///////////////  
           
@@ -879,7 +879,7 @@
             }
           });
         });
-          
+
         view.when().then(function() {     
             view.watch("scale", function(newValue) {
             vancPlaces.labelingInfo =
@@ -907,7 +907,6 @@
             }
           });
         });
-
 
 //////Radio Buttons/////
        
@@ -1177,7 +1176,6 @@
           highlightSelect.remove();
         });  
           
-
 ////////////Milemarker Search///////////////////
        
         webscene.when(function () {

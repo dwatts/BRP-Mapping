@@ -60,7 +60,7 @@
               </div>
               <div class="wrapper">
                 <img class='legend' alt='' src='img/Camping_White.png'/>
-                <span class="text">Camping</span>
+                <span class="text">Campground</span>
               </div>
               <div class="wrapper">
                 <img class='legend' alt='' src='img/Lodging_White.png'/>
@@ -68,12 +68,16 @@
               </div>
               <div class="wrapper">
                 <img class='legend' alt='' src='img/Maintenance_White.png'/>
-                <span class="text">Maintenance Facility</span>
+                <span class="text">NPS Maintenance Facility</span>
               </div>
               <div class="wrapper">
                 <img class='legend' alt='' src='img/Overlook_White.png'/>
                 <span class="text">Overlook</span>
-              </div>    
+              </div>
+              <div class="wrapper">
+                <img class='legend' alt='' src='img/Car_White.png'/>
+                <span class="text">Parking Area</span>
+              </div>       
               <div class="wrapper">
                 <img class='legend' alt='' src='img/State_Route.png'/>
                 <span class="text">Parkway Access Point</span>
@@ -127,8 +131,8 @@
                 <span class="text">Populated Places</span>
               </div>        
           </div>
-          <h2>About</h2>
-          <p class="aboutText">Use this 3D application to explore all 469 miles of the <a href="https://www.nps.gov/blri/index.htm" target="_blank">Blue Ridge Parkway</a> as it winds its way from Virginia to North Carolina. Click on icons to find out more information on Parkway facilities including overlooks, lodging, visitors centers and hiking trails. You can also zoom to points of interest or specific mile markers using the app's search tools.</p><p class="aboutText">The data for this application was created entirely in-house using a variety of sources including parkway information and map icons from the <a href="https://www.nps.gov" target="_blank">National Park Service</a>, <a href="https://www.usgs.gov/core-science-systems/ngp/national-hydrography/access-national-hydrography-products" target="_blank">hydrography</a> and <a href="https://www.usgs.gov/centers/eros/science/national-land-cover-database?qt-science_center_objects=0#qt-science_center_objects" target="_blank">landcover</a> data from the United States Geological Survey and building footprints and roadways from <a href="https://www.openstreetmap.org/#map=5/38.007/-95.844" target="_blank">Open Street Map</a>. Software used to create the application included ArcMap, QGIS, ArcGIS Pro (basemap tiles), Adobe Illustrator (icons) and Asset Forge for creating 3d building, bridge and tunnel face models.</p>
+          <h2>About the Map</h2>
+          <p class="aboutText">Use this 3D application to explore all 469 miles of the <a href="https://www.nps.gov/blri/index.htm" target="_blank">Blue Ridge Parkway</a> as it winds its way from Virginia to North Carolina. Click on icons to find out more information on Parkway facilities including overlooks, lodging, visitors centers and hiking trails. You can also zoom to points of interest or specific mile markers using the app's search tools.</p><p class="aboutText">The data for this application was created entirely in-house using a variety of sources including parkway information and map icons from the <a href="https://www.nps.gov" target="_blank">National Park Service</a>, <a href="https://www.usgs.gov/core-science-systems/ngp/national-hydrography/access-national-hydrography-products" target="_blank">hydrography</a> and <a href="https://www.usgs.gov/centers/eros/science/national-land-cover-database?qt-science_center_objects=0#qt-science_center_objects" target="_blank">landcover</a> data from the United States Geological Survey and building footprints and roadways from <a href="https://www.openstreetmap.org/#map=5/38.007/-95.844" target="_blank">Open Street Map</a>. Software used to create the application includes ArcMap, QGIS, ArcGIS Pro (basemap tiles), Adobe Illustrator and Asset Forge for creating 3D buildings, bridges and tunnel faces.</p>
           <h3 style="padding-left: 14px">Copyright © 2021 <a href="https://www.danielhwatts.com" target="_blank">Daniel H. Watts</a></h3>
         </div>
     </div>
@@ -142,6 +146,10 @@
       </label>
     </div>
     <div title="Information" id="infoButton" class='esri-icon-documentation'></div> 
+
+    <div id="loaderDiv">
+      <div class="loader"></div>
+    </div> 
       
     <div id="viewDiv"></div>  
     
