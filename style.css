@@ -695,7 +695,7 @@ input[type=number] {
   .esri-popup__main-container {
     margin-bottom: 50px !important;
     margin-left: 10px !important;
-    max-width: calc(100% - 20px) !important;
+    min-width: calc(100% - 20px) !important;
     width: calc(100% - 20px) !important;
     max-height: 250px !important;
   }
