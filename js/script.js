@@ -546,10 +546,11 @@
             definitionExpression: "type IN ('Tunnel', 'Terminus', 'Maintenance Yard', 'Parkway Administration')",
             popupTemplate: {
             outFields: ["*"],
-              //title: "{name_e}",
-              content: function (feature) {
-                return setContentInfoTwo(feature.graphic.attributes);
-              },    
+            //title: "{name_e}",
+            content: function (feature) {
+              return setContentInfoTwo(feature.graphic.attributes);
+            },
+            overwriteActions: true 
           },        
         });
           
