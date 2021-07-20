@@ -649,16 +649,16 @@ input[type=number] {
   }
 
   h1 {
-    font-size: 20px !important;
+    font-size: 18px !important;
   }
 
   h3 {
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .icon {
-    height: 40px;
-    width: 40px;
+    height: 35px;
+    width: 35px;
   }
 
   .iconText {

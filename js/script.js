@@ -84,10 +84,11 @@
           renderer: trailRender,
           popupTemplate: {
                 outFields: ["*"],
-                  //title: "{name_e}",
-                  content: function (feature) {
-                    return setContentInfoThree(feature.graphic.attributes);
-                  },    
+                //title: "{name_e}",
+                content: function (feature) {
+                  return setContentInfoThree(feature.graphic.attributes);
+                },
+                overwriteActions: true    
               },        
           });
           
@@ -296,10 +297,12 @@
 
         var overlookTemplate = {
             outFields: ["*"],
-              //title: "{name_e}",
-              content: function (feature) {
-                return setContentInfo(feature.graphic.attributes);
-              },    
+            //title: "{name_e}",
+            content: function (feature) {
+              return setContentInfo(feature.graphic.attributes);
+            },
+            overwriteActions: true
+
         };
           
         const brpOverlooks = new FeatureLayer({
@@ -620,18 +623,19 @@
            minScale: 75000,    
            popupTemplate: {
            outFields: ["*"],
-              //title: "{name_e}",
-              content: function (feature) {
-                return setContentInfoInter(feature.graphic.attributes);
-              },    
+            //title: "{name_e}",
+            content: function (feature) {
+              return setContentInfoInter(feature.graphic.attributes);
+            }, 
+            overwriteActions: true   
           },        
         });
 
         function setContentInfoInter(results) {
-            var interstateIcon = "<img class='icon' alt='' src='img/Interstate.png'/>";
-            var routeIcon = "<img class='icon' alt='' src='img/State_Route.png'/>";
+            const interstateIcon = "<img class='icon' alt='' src='img/Interstate.png'/>";
+            const routeIcon = "<img class='icon' alt='' src='img/State_Route.png'/>";
 
-            var interIcon = (
+            const interIcon = (
                 results.Type == 'Interstate' ? interstateIcon :
                 results.Type == 'US Route' ? routeIcon :
                 results.Type == 'State Route' ? routeIcon :
@@ -683,29 +687,29 @@
         };  
           
         const tunnels = new FeatureLayer ({
-           url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/Tunnel_Faces/FeatureServer",
-           renderer: tunnelRenderer,    
-           opacity: 1,
+          url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/Tunnel_Faces/FeatureServer",
+          renderer: tunnelRenderer,    
+          opacity: 1,
         });
            
         const brpBuildings3d = new FeatureLayer ({
-           url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Buildings_PointZM_Z/FeatureServer",
-           renderer: buildingRenderer,
-           elevationInfo: {
-              mode: "absolute-height"
-           },
-           opacity: 1,
+          url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Buildings_PointZM_Z/FeatureServer",
+          renderer: buildingRenderer,
+          elevationInfo: {
+            mode: "absolute-height"
+          },
+          opacity: 1,
         });
           
         const trees = new FeatureLayer({
-            url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Trees/FeatureServer",
-            elevationInfo: {
-                mode: "on-the-ground",
-            },
-            opacity: 0.7,
-            maxScale: 0,
-            minScale: 35000,
-            renderer: treeRenderer,
+          url: "https://services5.arcgis.com/CmuSiXApoWtqLYty/arcgis/rest/services/BRP_Trees/FeatureServer",
+          elevationInfo: {
+              mode: "on-the-ground",
+          },
+          opacity: 0.7,
+          maxScale: 0,
+          minScale: 40000,
+          renderer: treeRenderer,
         });
         
         const moreTrees = new FeatureLayer({
@@ -717,7 +721,7 @@
           maxScale: 0,
           minScale: 20000,
           renderer: treeRenderer,
-      });
+        });
 
 ////////////State Labels//////////////
           
@@ -772,7 +776,7 @@
         /////Set Scene View/////
 
        var webscene = new WebScene({
-            layers: [baseMap, tileBaseMap, vancBounds, othNatParks, vancPlaces, brpTrailsBack,brpTrails, tunnels, brpPeaks, brpOverlooks, brpTunnels, intersections, milePosts, brpBridges, brpBuildings3d, moreTrees, trees, stateLabels],
+            layers: [baseMap, tileBaseMap, vancBounds, othNatParks, vancPlaces, brpTrailsBack,brpTrails, tunnels, brpPeaks, brpOverlooks, brpTunnels, intersections, milePosts, brpBridges, brpBuildings3d, /*moreTrees,*/ trees, stateLabels],
             ground: {
                 layers: [new ExaggeratedElevationLayer()]
             }
@@ -843,7 +847,7 @@
         // Add widget to top-right of the view
         view.ui.add(editor, "top-right");*/
 
-        view.watch('camera.tilt', function(newValue, oldValue, property, object) {
+        /*view.watch('camera.tilt', function(newValue, oldValue, property, object) {
           console.log(property , newValue);
         });
           
@@ -853,7 +857,7 @@
           
         view.watch('camera.heading', function(newValue, oldValue, property, object) {
           console.log(property , newValue);
-        });
+        });*/
 
         watchUtils.whenTrueOnce(view, "updating", function(evt) {
           $("#loaderDiv").show();
